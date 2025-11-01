@@ -1,7 +1,9 @@
 .DS_Store
 Thumbs.db
 *.log
+*.tmp
 .env
-*.key
 *.pem
+*.key
+*_credentials.json
 node_modules/
