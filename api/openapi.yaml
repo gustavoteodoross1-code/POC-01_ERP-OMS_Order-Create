@@ -1,3 +1,61 @@
 openapi: 3.0.3
-info: { title: ERP → OMS - Order Create, version: 0.1.0 }
-paths: {}
+info:
+  title: ERP → OMS - Order Create
+  version: 1.0.0
+paths:
+  /orders:
+    post:
+      summary: Create Sales Order in OMS
+      security: [{ ApiKeyAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Order' }
+      responses:
+        '201':
+          description: Created
+          headers:
+            X-Order-Id: { schema: { type: string } }
+            X-Correlation-Id: { schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderCreated' }
+        '400': { description: Bad Request }
+        '401': { description: Unauthorized }
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+  schemas:
+    Order:
+      type: object
+      required: [orderId, items, customer, total]
+      properties:
+        orderId: { type: string }
+        createdAt: { type: string, format: date-time }
+        currency: { type: string, example: BRL }
+        customer:
+          type: object
+          required: [id, email]
+          properties:
+            id: { type: string }
+            email: { type: string, format: email }
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [sku, qty, price]
+            properties:
+              sku: { type: string }
+              qty: { type: number }
+              price: { type: number }
+        total: { type: number }
+    OrderCreated:
+      type: object
+      properties:
+        status: { type: string, enum: [accepted, created] }
+        message: { type: string }
