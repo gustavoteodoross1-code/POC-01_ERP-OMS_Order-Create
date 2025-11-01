@@ -1,1 +1,46 @@
-{ "info": { "name": "POC-01 ERP→OMS", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" }, "item": [] }
+{
+  "info": {
+    "name": "POC-01 ERP→OMS Order Create",
+    "_postman_id": "poc-erp-oms",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "iflow_base", "value": "https://<seu-endpoint-iflow>/http/orders" },
+    { "key": "x_api_key", "value": "demo-key" }
+  ],
+  "item": [
+    {
+      "name": "201 - Create Order (válido)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "x-api-key", "value": "{{x_api_key}}" }
+        ],
+        "url": "{{iflow_base}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orderId\":\"SO-1001\",\n  \"createdAt\":\"2025-01-10T12:00:00Z\",\n  \"currency\":\"BRL\",\n  \"customer\":{\"id\":\"C-001\",\"email\":\"c1@example.com\"},\n  \"items\":[{\"sku\":\"SKU-1\",\"qty\":2,\"price\":50}],\n  \"total\":100\n}"
+        }
+      }
+    },
+    {
+      "name": "400 - Payload inválido",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{iflow_base}}",
+        "body": { "mode": "raw", "raw": "{ \"orderId\":\"\", \"items\":[], \"total\":0 }" }
+      }
+    },
+    {
+      "name": "401 - Sem API Key (opcional)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{iflow_base}}",
+        "body": { "mode": "raw", "raw": "{ \"orderId\":\"SO-1002\",\"items\":[{\"sku\":\"S\",\"qty\":1,\"price\":10}],\"total\":10 }" }
+      }
+    }
+  ]
+}
