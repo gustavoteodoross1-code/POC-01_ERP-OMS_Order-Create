@@ -1,1 +1,18 @@
-{ "name": "OMS Mock", "port": 3000, "routes": [] }
+{
+  "name": "OMS Mock",
+  "port": 3000,
+  "routes": [
+    {
+      "method": "post",
+      "endpoint": "orders",
+      "responses": [
+        {
+          "statusCode": 201,
+          "label": "Created",
+          "headers": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{ \"status\":\"created\", \"message\":\"Order stored\" }"
+        }
+      ]
+    }
+  ]
+}
