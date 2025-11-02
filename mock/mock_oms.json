@@ -9,10 +9,64 @@
         {
           "statusCode": 201,
           "label": "Created",
-          "headers": [{ "key": "Content-Type", "value": "application/json" }],
-          "body": "{ \"status\":\"created\", \"message\":\"Order stored\" }"
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{ \"status\":\"created\", \"message\":\"Order stored\" }",
+          "uuid": "7cc6b143-c882-48cb-a10a-f6f2fa37087f",
+          "latency": 0,
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
         }
-      ]
+      ],
+      "uuid": "1f69c3c3-575a-48d9-ad98-cad172ea6bfa",
+      "type": "http",
+      "documentation": "",
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
     }
-  ]
+  ],
+  "uuid": "e2391605-e9ec-4cb8-8940-232451dc4e5a",
+  "lastMigration": 33,
+  "endpointPrefix": "",
+  "latency": 0,
+  "hostname": "",
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "1f69c3c3-575a-48d9-ad98-cad172ea6bfa"
+    }
+  ],
+  "folders": [],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
 }
