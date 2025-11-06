@@ -1,0 +1,8 @@
+{
+  "orderId": "SO-1001",
+  "createdAt": "2025-01-10T12:00:00Z",
+  "currency": "BRL",
+  "customer": { "id": "C-001", "email": "c1@example.com" },
+  "items": [ { "sku": "SKU-1", "qty": 2, "price": 50 } ],
+  "total": 100
+}
