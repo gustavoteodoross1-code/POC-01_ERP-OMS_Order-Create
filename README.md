@@ -1,11 +1,3 @@
-mandei ver no seu README e… dá pra ficar bem melhor ✅
-
-Hoje ele está todo “espremido” (quase sem quebras de linha), alguns títulos/trechos se misturam e os exemplos de `curl` perderam o host/variáveis — isso pode confundir quem for rodar.
-
-Abaixo vai uma versão **pronta-pra-uso** (só copiar e colar no `README.md`). Eu já corrigi formatação, quebras, seções, e deixei os exemplos com variáveis claras (`RUNTIME`, `USER`, `PASS`, `CID`). Mantive tudo que você documentou (exports, comportamento, testes, monitoramento, troubleshooting), mas mais limpo.
-
----
-
 # POC-01 · ERP → OMS · Order Create
 
 POC de integração no **SAP Integration Suite** para criar pedidos no OMS.
