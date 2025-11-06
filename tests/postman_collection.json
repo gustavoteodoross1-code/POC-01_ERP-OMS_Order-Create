@@ -1,46 +1,54 @@
+mkdir -p tests
+cat > tests/postman_collection.json <<'JSON'
 {
   "info": {
-    "name": "POC-01 ERP→OMS Order Create",
-    "_postman_id": "poc-erp-oms",
+    "name": "POC-01 ERP→OMS",
+    "_postman_id": "b1f2c3d4-0000-0000-0000-000000000000",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "variable": [
-    { "key": "iflow_base", "value": "https://<seu-endpoint-iflow>/http/orders" },
-    { "key": "x_api_key", "value": "demo-key" }
-  ],
   "item": [
     {
-      "name": "201 - Create Order (válido)",
+      "name": "POST Create Sales Order in OMS",
       "request": {
         "method": "POST",
         "header": [
           { "key": "Content-Type", "value": "application/json" },
-          { "key": "x-api-key", "value": "{{x_api_key}}" }
+          { "key": "X-Correlation-Id", "value": "{{cid}}" }
         ],
-        "url": "{{iflow_base}}",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "{{user}}", "type": "string" },
+            { "key": "password", "value": "{{pass}}", "type": "string" }
+          ]
+        },
+        "url": "{{host}}/http/orders",
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"orderId\":\"SO-1001\",\n  \"createdAt\":\"2025-01-10T12:00:00Z\",\n  \"currency\":\"BRL\",\n  \"customer\":{\"id\":\"C-001\",\"email\":\"c1@example.com\"},\n  \"items\":[{\"sku\":\"SKU-1\",\"qty\":2,\"price\":50}],\n  \"total\":100\n}"
+          "raw": "{ \"orderId\": \"SO-1001\", \"total\": 100 }"
         }
       }
     },
     {
-      "name": "400 - Payload inválido",
+      "name": "GET (deve retornar 405)",
       "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": "{{iflow_base}}",
-        "body": { "mode": "raw", "raw": "{ \"orderId\":\"\", \"items\":[], \"total\":0 }" }
-      }
-    },
-    {
-      "name": "401 - Sem API Key (opcional)",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": "{{iflow_base}}",
-        "body": { "mode": "raw", "raw": "{ \"orderId\":\"SO-1002\",\"items\":[{\"sku\":\"S\",\"qty\":1,\"price\":10}],\"total\":10 }" }
+        "method": "GET",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            { "key": "username", "value": "{{user}}", "type": "string" },
+            { "key": "password", "value": "{{pass}}", "type": "string" }
+          ]
+        },
+        "url": "{{host}}/http/orders"
       }
     }
+  ],
+  "variable": [
+    { "key": "host", "value": "https://<subaccount>.cfapps.us10-001.hana.ondemand.com" },
+    { "key": "user", "value": "seu.usuario@example.com" },
+    { "key": "pass", "value": "sua-senha" },
+    { "key": "cid",  "value": "postman-{{$timestamp}}" }
   ]
 }
+JSON
