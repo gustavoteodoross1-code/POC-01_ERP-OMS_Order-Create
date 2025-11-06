@@ -1,5 +1,3 @@
-mkdir -p tests
-cat > tests/postman_collection.json <<'JSON'
 {
   "info": {
     "name": "POC-01 ERP→OMS",
@@ -13,7 +11,7 @@ cat > tests/postman_collection.json <<'JSON'
         "method": "POST",
         "header": [
           { "key": "Content-Type", "value": "application/json" },
-          { "key": "X-Correlation-Id", "value": "{{cid}}" }
+          { "key": "X-Correlation-Id", "value": "{{cid}}", "type": "text" }
         ],
         "auth": {
           "type": "basic",
@@ -22,15 +20,19 @@ cat > tests/postman_collection.json <<'JSON'
             { "key": "password", "value": "{{pass}}", "type": "string" }
           ]
         },
-        "url": "{{host}}/http/orders",
+        "url": {
+          "raw": "{{host}}/http/orders",
+          "host": ["{{host}}"],
+          "path": ["http", "orders"]
+        },
         "body": {
           "mode": "raw",
-          "raw": "{ \"orderId\": \"SO-1001\", \"total\": 100 }"
+          "raw": "{\"orderId\":\"SO-1001\",\"total\":100}"
         }
       }
     },
     {
-      "name": "GET (deve retornar 405)",
+      "name": "GET should return 405",
       "request": {
         "method": "GET",
         "auth": {
@@ -40,15 +42,18 @@ cat > tests/postman_collection.json <<'JSON'
             { "key": "password", "value": "{{pass}}", "type": "string" }
           ]
         },
-        "url": "{{host}}/http/orders"
+        "url": {
+          "raw": "{{host}}/http/orders",
+          "host": ["{{host}}"],
+          "path": ["http", "orders"]
+        }
       }
     }
   ],
   "variable": [
-    { "key": "host", "value": "https://<subaccount>.cfapps.us10-001.hana.ondemand.com" },
+    { "key": "host", "value": "https://<seu-subaccount>.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com" },
     { "key": "user", "value": "seu.usuario@example.com" },
     { "key": "pass", "value": "sua-senha" },
     { "key": "cid",  "value": "postman-{{$timestamp}}" }
   ]
 }
-JSON
